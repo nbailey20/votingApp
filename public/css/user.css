@@ -1,0 +1,61 @@
+/*Header styling*/
+.header {
+	text-align: center;
+	font-size: 26px;
+	background-color: tan;
+	position: fixed;
+	width: 105%;
+	height: 50px;
+	z-index: 1;
+}
+.header-title {
+	font-family: fantasy;
+	margin-top: 11px;
+	color: navy;
+}
+.header-title:hover, .header-title:focus, .header-title:active .header-title:visited {
+	border: none;
+	outline: none;
+	color: navy;
+	text-decoration: none;
+}
+.header-home {
+	font-family: sans-serif;
+	margin-top: 7px;
+	color: navy;
+}
+.header-home:hover, .header-home:focus, .header-home:active .header-home:visited {
+	border: none;
+	outline: none;
+	color: green;
+}
+.header-name {
+	margin-top: 5px;
+}
+
+/* Main text styling */
+.main-text {
+	position: relative;
+	text-align: center;
+	padding-top: 70px;
+	margin-left: 15%;
+	margin-right: 15%;
+	background-color: lightgray;
+}
+.main-title {
+	font-size: 50px;
+	font-family: fantasy;
+	color: darkgreen;
+	margin-bottom: 0;
+}
+.main-descrip {
+	font-size: 25px;
+	font-family: serif;
+	color: maroon;
+	margin-top: -7px;
+}
+.main-instruct {
+	font-size: 15px;
+	font-family: sans-serif;
+	margin-top: 40px;
+}

@@ -8,6 +8,6 @@ $(document).ready(function () {
    });
    
    function successHandler (data) {
-       $("#test").html(JSON.stringify(data.name));
+       $("#name").html(JSON.stringify(data.name).substr(1, data.name.length));
    }
 });

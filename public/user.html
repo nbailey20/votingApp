@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Voter</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/public/css/user.css" type="text/css" />
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="/controllers/twitterAccess.js"></script>
     </head>
     
     <body>
-        <h1>Hello there:</h1>
-        <p id="test">User name here please</p>
+        <div class="header row">
+			<div class="col-xs-2 header-title">
+				<a class="header-title" href="https://votingapp-bartowski20.c9users.io/">Voter</a>
+			</div>
+			<div class="col-xs-5"></div>
+			<div class="col-xs-2 header-home">
+				<a class="header-home" href="https://votingapp-bartowski20.c9users.io/">Home</a>
+			</div>
+			<div class="col-xs-3">
+				<p class="header-name" id="name">Loading...</p>
+			</div>
+		</div>
+        
+        <div class="main-text">
+			<h1 class="main-title">Voter</h1>
+			<p class="main-descrip">Create or participate in online polls!</p>
+			<p class="main-instruct">Select a poll to see the results and vote, or create a new poll!</p>
+		</div>
+        
     </body>
 </html>

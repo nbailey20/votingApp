@@ -1,6 +1,8 @@
 'use strict';
 
 var Twitter = require("node-twitter-api");
+var secret;
+var access = {token: "", secret: ""};
 
 module.exports = function (app) {
 	 var twitter = new Twitter({
@@ -14,7 +16,7 @@ module.exports = function (app) {
 			res.sendFile(process.cwd() + "/public/index.html");	
 		});
 		
-	var secret;
+
 	app.route("/request-token") 
 		.get(function (req, res) {
 		   twitter.getRequestToken(function(err, requestToken, requestSecret) {
@@ -38,19 +40,40 @@ module.exports = function (app) {
 		.get(function (req, res) {
 			var requestToken = req.query.oauth_token,
         	verifier = req.query.oauth_verifier;
-
-        	twitter.getAccessToken(requestToken, secret, verifier, function(err, accessToken, accessSecret) {
-            if (err)
-                res.status(500).send(err);
-            else
-                twitter.verifyCredentials(accessToken, accessSecret, function(err, user) {
+        	if (access.token !== "") {
+        		twitter.verifyCredentials(access["token"], access["secret"], function(err, user) {
                     if (err)
                         res.status(500).send(err);
                     else
                         res.send(user);
                 });
-        	});	
+        	}
+        	
+        	else {
+        		twitter.getAccessToken(requestToken, secret, verifier, function(err, accessToken, accessSecret) {
+	            	if (err) {
+	                	res.status(500).send(err);
+	            	}
+	            	else {
+	            		access["token"] = accessToken;
+	            		access["secret"] = accessSecret;
+	                	twitter.verifyCredentials(access["token"], access["secret"], function(err, user) {
+	                    if (err)
+	                        res.status(500).send(err);
+	                    else
+	                        res.send(user);
+	                	});
+	            	}
+	        	});	
+        	}
 		});
 		
+		
+	app.route("/logout")
+		.get(function (req, res) {
+			access.secret = "";
+			access.token = "";
+			res.redirect("https://votingapp-bartowski20.c9users.io/");
+		});
 	
 };

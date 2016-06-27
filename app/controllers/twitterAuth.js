@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     $("#twitter").on("click", function () {
-       alert("clciked");
+      window.location.href = "https://votingapp-bartowski20.c9users.io/request-token";
    }); 
 });
    

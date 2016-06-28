@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Voter</title>
+        <title>MyPolls</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/public/css/user.css" type="text/css" />
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="/controllers/twitterAccess.js"></script>
+		<link rel="stylesheet" href="/public/css/mypolls.css" type="text/css" />
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="/controllers/twitterAccess.js"></script>
+		<script type="text/javascript" src="/controllers/pullMyPolls.js"></script>
     </head>
     
     <body>
-        <div class="header row">
+         <div class="header row">
 			<div class="col-xs-2 header-title">
 				<a class="header-title" href="https://votingapp-bartowski20.c9users.io/user">Voter</a>
 			</div>
@@ -24,15 +25,15 @@
 			    <a class="header-newpoll" href="https://votingapp-bartowski20.c9users.io/newpoll">New Poll</a>
 			</div>
 			<div class="col-xs-1">
-				<button class="header-name btn btn-default" id="name">Loading...</button>
+				<button class="header-name btn btn-default" id="name" value="">Loading...</button>
 			</div>
 		</div>
         
         <div class="main-text">
 			<h1 class="main-title">Voter</h1>
-			<p class="main-descrip">Create or participate in online polls!</p>
-			<p class="main-instruct">Select a poll to see the results and vote, or  <a href="https://votingapp-bartowski20.c9users.io/newpoll">create a new poll!</a></p>
+			<p class="main-descrip">Below are polls you own.</p>
+			<p class="main-instruct">Select a poll to see the results and vote, or <a href="https://votingapp-bartowski20.c9users.io/newpoll">create a new poll!</a></p>
+			<div id="polls"></div>
 		</div>
-        
     </body>
 </html>

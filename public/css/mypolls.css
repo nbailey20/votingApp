@@ -10,6 +10,7 @@
 }
 .header-title {
 	font-family: fantasy;
+	
 	margin-top: 11px;
 	color: navy;
 }
@@ -22,7 +23,6 @@
 .header-home {
 	font-family: sans-serif;
 	margin-top: 7px;
-	
 	color: navy;
 }
 .header-home:hover, .header-home:focus, .header-home:active .header-home:visited {
@@ -73,7 +73,7 @@
 	font-size: 50px;
 	font-family: fantasy;
 	color: darkgreen;
-	margin-bottom: 0;
+	margin-bottom: 40px;
 }
 .main-descrip {
 	font-size: 25px;
@@ -85,5 +85,5 @@
 	font-size: 15px;
 	font-family: sans-serif;
 	margin-top: 40px;
-	padding-bottom: 30px;
+	padding-bottom: 50px;
 }

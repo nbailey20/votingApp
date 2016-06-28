@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MyPolls</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/public/css/newpoll.css" type="text/css" />
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="/controllers/twitterAccess.js"></script>
+		<script type="text/javascript" src="/controllers/createPoll.js"></script>
+    </head>
+    
+    <body>
+         <div class="header row">
+			<div class="col-xs-2 header-title">
+				<a class="header-title" href="https://votingapp-bartowski20.c9users.io/user">Voter</a>
+			</div>
+			<div class="col-xs-6"></div>
+			<div class="col-xs-1 header-home">
+				<a class="header-home" href="https://votingapp-bartowski20.c9users.io/user">Home</a>
+			</div>
+			<div class="col-xs-1 header-mypolls">
+			    <a class="header-mypolls" href="https://votingapp-bartowski20.c9users.io/mypolls">My Polls</a>
+			</div>
+			<div class="col-xs-1 header-newpoll">
+			    <a class="header-newpoll" href="https://votingapp-bartowski20.c9users.io/newpoll">New Poll</a>
+			</div>
+			<div class="col-xs-1">
+				<button class="header-name btn btn-default" id="name" value="">Loading...</button>
+			</div>
+		</div>
+        
+        <div class="main-text">
+			<h1 class="main-title">Make a New Poll!</h1>
+			<div class="title">
+			    <p>Title:</p>
+			</div>
+			<div class="title-input">
+			    <input type="text" id="title-input" value="" 
+                    placeholder="">
+			</div>
+			<div class="choices">
+			    <p>Poll Choices (one per line):</p>
+			</div>
+			<div class="choices-input">
+			    <textarea rows=6 cols=50 id="choices-input"></textarea>
+			</div>
+			<div class="make">
+				<button class="btn btn-primary make-button" id="create-poll">Create Poll!</button>
+			</div>
+		</div>
+    </body>
+</html>
+

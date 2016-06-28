@@ -22,7 +22,6 @@
 .header-home {
 	font-family: sans-serif;
 	margin-top: 7px;
-	
 	color: navy;
 }
 .header-home:hover, .header-home:focus, .header-home:active .header-home:visited {
@@ -63,7 +62,6 @@
 /* Main text styling */
 .main-text {
 	position: relative;
-	text-align: center;
 	padding-top: 70px;
 	margin-left: 20%;
 	margin-right: 20%;
@@ -71,19 +69,39 @@
 }
 .main-title {
 	font-size: 50px;
-	font-family: fantasy;
-	color: darkgreen;
-	margin-bottom: 0;
+	margin-left: 30px;
+	font-family: cursive;
+	margin-bottom: 40px;
 }
-.main-descrip {
-	font-size: 25px;
-	font-family: serif;
-	color: maroon;
-	margin-top: -7px;
+
+.title {
+    font-size: 25px;
+    margin-left: 30px;
 }
-.main-instruct {
-	font-size: 15px;
-	font-family: sans-serif;
-	margin-top: 40px;
-	padding-bottom: 30px;
+#title-input {
+    width: 70%;
+    border-radius: 3px;
+    margin-left: 30px;
+    margin-bottom: 25px;
+    border-width: 0px;
+}
+input {
+	border-color: gray;
+}
+.choices {
+    font-size: 25px;
+    margin-left: 30px;
+}
+#choices-input {
+    width: 70%;
+    border-radius: 3px;
+    margin-left: 30px;
+    margin-bottom: 50px;
+    margin-bottom: 25px;
+    border-width: 0px;
+}
+
+.make-button {
+	margin-bottom: 50px;
+	margin-left: 30px;
 }

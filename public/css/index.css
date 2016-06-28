@@ -27,7 +27,8 @@
 .header-home:hover, .header-home:focus, .header-home:active .header-home:visited {
 	border: none;
 	outline: none;
-	color: green;
+	text-decoration: none;
+	color: maroon;
 }
 .header-button {
 	margin-top: 5px;
@@ -38,8 +39,8 @@
 	position: relative;
 	text-align: center;
 	padding-top: 70px;
-	margin-left: 15%;
-	margin-right: 15%;
+	margin-left: 20%;
+	margin-right: 20%;
 	background-color: lightgray;
 }
 .main-title {

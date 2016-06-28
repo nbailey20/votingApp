@@ -1,6 +1,8 @@
 'use strict';
 
 $(document).ready(function () {
+   var userID;
+   
    $.ajax({
        type: "GET",
        url: "https://votingapp-bartowski20.c9users.io/access-token" + location.search,
@@ -9,7 +11,9 @@ $(document).ready(function () {
    });
    
    function successHandler (data) {
-       $("#name").html(JSON.stringify(data.name).substr(1, data.name.length));
+       userID = "4659395603";//JSON.stringify(data.id);
+       $("#name").val(userID);
+       $("#name").html(data); //JSON.stringify(data.name).substr(1, data.name.length));
    }
    
    function backHome (err) {

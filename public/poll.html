@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Voter</title>
+        <title>Poll</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/public/css/user.css" type="text/css" />
+        <link rel="stylesheet" href="/public/css/poll.css" type="text/css" />
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/controllers/twitterAccess.js"></script>
-        <script type="text/javascript" src="/controllers/pullAllPolls.js"></script>
+        <script type="text/javascript" src="/controllers/pollInfo.js"></script>
     </head>
     
     <body>
-        <div class="header row">
+         <div class="header row">
 			<div class="col-xs-2 header-title">
 				<a class="header-title" href="https://votingapp-bartowski20.c9users.io/user">Voter</a>
 			</div>
@@ -28,13 +29,18 @@
 				<button class="header-name btn btn-default" id="name">Loading...</button>
 			</div>
 		</div>
-        
-        <div class="main-text">
-			<h1 class="main-title">Voter</h1>
-			<p class="main-descrip">Create or participate in online polls!</p>
-			<p class="main-instruct">Select a poll to see the results and vote, or  <a href="https://votingapp-bartowski20.c9users.io/newpoll">create a new poll!</a></p>
-			<div id="polls"></div>
+		
+		<div class="main-text">
+			<h1 id="title"></h1>
+			<p class="vote-instruct">I'd like to vote for:</p>
+			<div class="dropdown">
+                <button class="choice-button btn btn-default dropdown-toggle" id="choice" data-toggle="dropdown">Choose an option...
+                    <span class="caret"></span></button>
+                <ul id="choices" class="dropdown-menu"></ul>
+            </div>
+			<button class="btn btn-primary vote" id="vote">Submit</button> <br>
+			<button class="btn btn-secondary share" id="share">Share on Twitter</button>
 		</div>
-        
+		
     </body>
 </html>

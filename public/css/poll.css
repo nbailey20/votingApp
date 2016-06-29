@@ -55,7 +55,6 @@
 	text-decoration: none;
 	color: maroon;
 }
-
 .header-name {
 	margin-top: 5px;
 }
@@ -63,35 +62,38 @@
 /* Main text styling */
 .main-text {
 	position: relative;
-	text-align: center;
 	padding-top: 70px;
 	margin-left: 20%;
 	margin-right: 20%;
 	background-color: lightgray;
 }
-.main-title {
+#title {
 	font-size: 50px;
-	font-family: fantasy;
-	color: darkgreen;
+	font-family: cursive;
 	margin-bottom: 40px;
+	margin-left: 30px;
 }
-.main-descrip {
+.vote-instruct {
 	font-size: 25px;
 	font-family: serif;
 	color: maroon;
 	margin-top: -7px;
+	margin-left: 30px;
 }
-.main-instruct {
-	font-size: 15px;
-	font-family: sans-serif;
-	margin-top: 40px;
-	padding-bottom: 50px;
+.choice-button {
+    margin-left: 30px;
+    width: 30%;
+    margin-bottom: 15px;
 }
-
-#polls {
-	padding-bottom: 50px;
+.option {
+    text-align: center;
 }
-.data {
-	width: 80%;
-	margin-top: -11px;
+.vote {
+    margin-left: 30px;
+    width: 30%;
+    margin-bottom: 15px;
+}
+.share {
+    margin-left: 30px;
+    width: 30%;
 }

@@ -78,6 +78,13 @@ module.exports = function (app, db) {
 	app.route("/user")
 		.get(function (req, res) {
 			res.sendFile(process.cwd() + "/public/user.html");
+		})
+		.post(function (req, res) {
+			var polls = db.collection("polls");
+			polls.find({createdby: {$exists: true}}).toArray(function (err, docs) {
+				if (err) throw err;
+				res.send(docs);
+			});
 		});
 		
 		
@@ -89,7 +96,6 @@ module.exports = function (app, db) {
 			var polls = db.collection("polls");
 			polls.find({createdby: req.body.id}).toArray(function (err, docs) {
 				if (err) throw err;
-				console.log(docs);
 				res.send(docs);
 			});
 				
@@ -108,13 +114,15 @@ module.exports = function (app, db) {
 			var choices = req.body.choices;
 			choices = choices.substr(1, choices.length-2).split(",");
 			var author = req.body.author;
+			var votes = req.body.votes;
 			
 			var polls = db.collection("polls");
-			polls.insert({title: title, choices: choices, createdby: author});
+			polls.insert({title: title, choices: choices, createdby: author, votes: votes});
 			var id;
 			polls.find().sort({_id: -1}).limit(1).toArray(function (err, docs) {
 				if (err) throw err;
 				id = JSON.stringify(docs[0]["_id"]);
+				console.log(JSON.stringify(docs[0]["votes"]));
 				res.send(id);
 			});
 		});
@@ -122,12 +130,14 @@ module.exports = function (app, db) {
 		
 	app.route("/poll/:ID")
 		.get(function (req, res) {
-			var pageID = req.params.ID;	
-			console.log(pageID);
+			res.sendFile(process.cwd() + "/public/poll.html");
+		})
+		.post(function (req, res) {
+			var ID = req.params.ID;
 			var polls = db.collection("polls");
-			polls.find({"_id": ObjectId(pageID)}).toArray(function (err, docs) {
+			polls.find({"_id": ObjectId(ID)}).toArray(function (err, docs) {
 				if (err) throw err;
-				res.send(JSON.stringify(docs));
+				res.send(docs);
 			});
 		});
 };

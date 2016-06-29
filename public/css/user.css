@@ -87,3 +87,11 @@
 	margin-top: 40px;
 	padding-bottom: 30px;
 }
+
+#polls {
+	padding-bottom: 50px;
+}
+.data {
+	width: 80%;
+	margin-top: -11px;
+}

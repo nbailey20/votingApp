@@ -21,7 +21,7 @@ function successHandler(data) {
         var title = JSON.stringify(element.title);
         var id = JSON.stringify(element["_id"]);
         var url = "https://votingapp-bartowski20.c9users.io/poll/" + id.substr(1, id.length-2);
-        html += "<p><a href='" + url + "'>" + title.substr(1, title.length-2) + "</a></p>";
+        html += "<p><a class='data btn btn-default' href='" + url + "'>" + title.substr(1, title.length-2) + "</a></p>";
     });
     $("#polls").html(html);
 }

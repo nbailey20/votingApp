@@ -13,13 +13,13 @@ $(document).ready(function () {
        var chosen = $("#"+id).html();
        $("#choice").html(chosen);
    })
-   
-   
 });
 
 function successHandler (data) {
        var title = JSON.stringify(data[0].title);
        var choices = data[0].choices;
+       var votes = JSON.stringify(data[0].votes);
+
        var options = "";
        var i = 1;
        choices.forEach(function (element) {
@@ -28,6 +28,7 @@ function successHandler (data) {
        });
        $("#title").html(title.substr(1, title.length-2));
        $("#choices").html(options);
+       $("#polldata").html(votes);
 }
    
 function errorHandler (err) {

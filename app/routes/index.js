@@ -115,14 +115,15 @@ module.exports = function (app, db) {
 			choices = choices.substr(1, choices.length-2).split(",");
 			var author = req.body.author;
 			var votes = req.body.votes;
+			votes = JSON.parse(votes);
 			
+
 			var polls = db.collection("polls");
 			polls.insert({title: title, choices: choices, createdby: author, votes: votes});
 			var id;
 			polls.find().sort({_id: -1}).limit(1).toArray(function (err, docs) {
 				if (err) throw err;
 				id = JSON.stringify(docs[0]["_id"]);
-				console.log(JSON.stringify(docs[0]["votes"]));
 				res.send(id);
 			});
 		});
@@ -140,4 +141,25 @@ module.exports = function (app, db) {
 				res.send(docs);
 			});
 		});
+		
+		
+	app.route("/vote") 
+		.post(function (req,res) {
+			var vote = req.body.vote;
+			var pollID = req.body.id;
+			var polls = db.collection("polls");
+			var hack = {}
+			hack['votes.' + vote] = 1;
+			polls.update({"_id": ObjectId(pollID)}, {$inc: hack});
+			res.send(vote);
+		});
+		
+		
+	app.route("/bullshit")
+		.get(function (req, res) {
+			var polls = db.collection("polls");
+			polls.drop();
+			res.send("sucess");
+		});
 };
+

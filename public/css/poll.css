@@ -63,25 +63,26 @@
 .main-text {
 	position: relative;
 	padding-top: 70px;
-	margin-left: 20%;
-	margin-right: 20%;
+	margin-left: 10%;
+	margin-right: 10%;
 	background-color: lightgray;
+	overflow: hidden;
 }
 #title {
 	font-size: 50px;
 	font-family: cursive;
 	margin-bottom: 40px;
-	margin-left: 30px;
+	margin-left: 10%;
 }
 .vote-instruct {
 	font-size: 25px;
 	font-family: serif;
 	color: maroon;
 	margin-top: -7px;
-	margin-left: 30px;
+	margin-left: 10%;
 }
 .choice-button {
-    margin-left: 30px;
+    margin-left: 10%;
     width: 30%;
     margin-bottom: 15px;
 }
@@ -89,11 +90,15 @@
     text-align: center;
 }
 .vote {
-    margin-left: 30px;
+    margin-left: 10%;
     width: 30%;
     margin-bottom: 15px;
 }
 .share {
-    margin-left: 30px;
+    margin-left: 10%;
     width: 30%;
+}
+.chart {
+	margin-left: -20%;
+	margin-top: -5%;
 }

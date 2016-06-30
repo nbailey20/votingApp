@@ -148,18 +148,10 @@ module.exports = function (app, db) {
 			var vote = req.body.vote;
 			var pollID = req.body.id;
 			var polls = db.collection("polls");
-			var hack = {}
+			var hack = {};
 			hack['votes.' + vote] = 1;
 			polls.update({"_id": ObjectId(pollID)}, {$inc: hack});
 			res.send(vote);
-		});
-		
-		
-	app.route("/bullshit")
-		.get(function (req, res) {
-			var polls = db.collection("polls");
-			polls.drop();
-			res.send("sucess");
 		});
 };
 

@@ -5,8 +5,13 @@ var choices;
 var votes;
 
 $(document).ready(function () {
-   makeAjax();
-  // setTimeout(drawChart, 250);
+   if (document.referrer.substr(0, 23) == "https://api.twitter.com") {
+       setTimeout(makeAjax1, 750);
+   }
+   else {
+       makeAjax1();
+   }
+   
    google.charts.load('current', {'packages':['corechart']});
    google.charts.setOnLoadCallback(drawChart);
    
@@ -18,7 +23,7 @@ $(document).ready(function () {
    
    $("#vote").on("click", function () {
        var vote = $("#choice").html();
-       var id = location.href.substr(location.href.length-24, location.href.length);
+       var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
        $.ajax({
          type: "POST",
          url: "https://votingapp-bartowski20.c9users.io/vote",
@@ -29,19 +34,26 @@ $(document).ready(function () {
    });
 });
 
-function makeAjax() {
+function makeAjax1() {
        $.ajax({
               type: "POST",
               url: location.href,
-              success: successHandler,
+              success: successHandler1,
               error: errorHandler
           });
 }
 
-function successHandler (data) {
-        title = JSON.stringify(data[0].title);
-        choices = data[0].choices;
-        votes = JSON.stringify(data[0].votes);
+function successHandler1 (data) {
+        title = JSON.stringify(data.title);
+        choices = data.choices;
+        votes = JSON.stringify(data.votes);
+        var header = '<div class="col-xs-2 header-title"><a class="header-title" href="https://votingapp-bartowski20.c9users.io/user">Voter</a>' 
+		header += '</div><div class="col-xs-6"></div><div class="col-xs-1 header-home"><a class="header-home" href="https://votingapp-bartowski20.c9users.io/user">Home</a>'
+		header += '</div><div class="col-xs-1 header-mypolls"><a class="header-mypolls" href="https://votingapp-bartowski20.c9users.io/mypolls">My Polls</a>'
+		header += '</div><div class="col-xs-1 header-newpoll"><a class="header-newpoll" href="https://votingapp-bartowski20.c9users.io/newpoll">New Poll</a>'
+		header += '</div><div class="col-xs-1"><div class="dropdown">'
+		header += '<button class="header-name btn btn-default dropdown-toggle" id="name" data-toggle="dropdown">Loading...<span class="caret"></span></button>'
+		header += '<ul class="dropdown-menu"><li id="logout"><a href="https://votingapp-bartowski20.c9users.io/logout">Logout</a></li></ul></div></div>'
        
        var options = "";
        var i = 1;
@@ -51,6 +63,10 @@ function successHandler (data) {
        });
        $("#title").html(title.substr(1, title.length-2));
        $("#choices").html(options);
+       if (data.loggedIn == "yes") {
+           $("#header").html(header);
+           $("#name").html(data.name + '<span class="caret"></span>');
+       }
        drawChart();
 }
   
@@ -80,7 +96,7 @@ function drawChart() {
    
    function successer(data) {
       alert("Cast vote for " + data);
-      makeAjax();
+      makeAjax1();
 }
 
    function errorer(err) {

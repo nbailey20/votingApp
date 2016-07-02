@@ -1,16 +1,17 @@
 /*Header styling*/
 .header {
 	text-align: center;
-	font-size: 26px;
+	min-width: 1250px;
+	font-size: 18px;
 	background-color: tan;
 	position: fixed;
 	width: 105%;
-	height: 50px;
+	height: 45px;
 	z-index: 1;
 }
 .header-title {
 	font-family: fantasy;
-	margin-top: 11px;
+	margin-top: 12px;
 	color: navy;
 }
 .header-title:hover, .header-title:focus, .header-title:active .header-title:visited {
@@ -21,7 +22,7 @@
 }
 .header-home {
 	font-family: sans-serif;
-	margin-top: 7px;
+	margin-top: 9px;
 	color: navy;
 }
 .header-home:hover, .header-home:focus, .header-home:active .header-home:visited {

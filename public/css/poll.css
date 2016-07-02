@@ -1,17 +1,18 @@
+
 /*Header styling*/
 .header {
 	text-align: center;
-	font-size: 26px;
+	min-width: 1250px;
+	font-size: 18px;
 	background-color: tan;
 	position: fixed;
 	width: 102%;
-	height: 50px;
+	height: 45px;
 	z-index: 1;
 }
 .header-title {
 	font-family: fantasy;
-	
-	margin-top: 11px;
+	margin-top: 12px;
 	color: navy;
 }
 .header-title:hover, .header-title:focus, .header-title:active .header-title:visited {
@@ -22,8 +23,11 @@
 }
 .header-home {
 	font-family: sans-serif;
-	margin-top: 7px;
+	margin-top: 9px;
 	color: navy;
+}
+.header-button {
+	margin-top: 5px;
 }
 .header-home:hover, .header-home:focus, .header-home:active .header-home:visited {
 	border: none;
@@ -33,7 +37,7 @@
 }
 .header-mypolls {
 	font-family: sans-serif;
-	margin-top: 7px;
+	margin-top: 9px;
 	color: navy;
 }
 .header-mypolls:hover, .header-mypolls:focus, .header-mypolls:active .header-mypolls:visited {
@@ -45,7 +49,7 @@
 }
 .header-newpoll {
 	font-family: sans-serif;
-	margin-top: 7px;
+	margin-top: 9px;
 	color: navy;
 }
 .header-newpoll:hover, .header-newpoll:focus, .header-newpoll:active .header-newpoll:visited {
@@ -67,6 +71,9 @@
 	margin-right: 10%;
 	background-color: lightgray;
 	overflow: hidden;
+}
+.text {
+	z-index: 1;
 }
 #title {
 	font-size: 50px;

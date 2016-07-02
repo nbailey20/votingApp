@@ -1,7 +1,7 @@
 'use strict';
 
 $(document).ready(function () {
-    setTimeout(pullData, 250);
+    setTimeout(pullData, 500);
 });
 
 function pullData() {

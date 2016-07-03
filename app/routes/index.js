@@ -177,5 +177,14 @@ module.exports = function (app, db) {
 			polls.update({"_id": ObjectId(pollID)}, {$inc: hack});
 			res.send(vote);
 		});
+		
+		
+	app.route("/deletePoll")
+		.post(function (req, res) {
+			var id = req.body.id;
+			var polls = db.collection("polls");
+			polls.remove({"_id": ObjectId(id)}, true);
+			res.send("removed");
+		});
 };
 

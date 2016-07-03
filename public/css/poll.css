@@ -106,6 +106,16 @@
     width: 30%;
 }
 .chart {
-	margin-left: -20%;
 	margin-top: -5%;
+	text-align: center;
+	margin-left: -10%;
+}
+#piechart {
+	text-align: center;
+	margin: 0 auto;
+}
+.delete-button {
+	text-align: center;
+	width: 500px;
+	margin-bottom: 30px;
 }

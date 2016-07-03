@@ -32,6 +32,28 @@ $(document).ready(function () {
          error: errorer
        });
    });
+   
+   $("#share").on("click", function () {
+       var url = "https://twitter.com/intent/tweet?text="+$("#title").html()+" %7C Voter&url=https://votingapp-bartowski20.c9users.io/poll/";
+       url += location.pathname.substr(location.pathname.length-24, location.pathname.length);
+       window.open(url, "_blank"); 
+   });
+   
+   
+   $("#delete").on("click", function () {
+      var makeSure = confirm("Are you sure you want to delete this poll?"); 
+      if (makeSure) {
+           var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
+           $.ajax({
+             type: "POST",
+             url: "https://votingapp-bartowski20.c9users.io/deletePoll",
+             data: {id: id},
+             success: successDelete,
+             error: errorDelete
+           });
+      }
+   });
+   
 });
 
 function makeAjax1() {
@@ -66,6 +88,7 @@ function successHandler1 (data) {
        if (data.loggedIn == "yes") {
            $("#header").html(header);
            $("#name").html(data.name + '<span class="caret"></span>');
+           $("#delete").html("<button id='deletepoll' class='btn btn-danger delete-button'>Delete Poll</button>");
        }
        drawChart();
 }
@@ -104,3 +127,10 @@ function drawChart() {
    }
 
 
+function successDelete (data) {
+    window.location.href = "https://votingapp-bartowski20.c9users.io/user";
+}
+
+function errorDelete (err) {
+    alert("error with deleting poll");
+}

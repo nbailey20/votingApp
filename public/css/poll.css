@@ -90,20 +90,27 @@
 }
 .choice-button {
     margin-left: 10%;
-    width: 30%;
+    width: 50%;
     margin-bottom: 15px;
+}
+.dropdown-menu {
+	padding-left: 5%;
+	padding-right: 5%;
 }
 .option {
     text-align: center;
 }
+.option:hover {
+	text-decoration: underline;
+}
 .vote {
     margin-left: 10%;
-    width: 30%;
+    width: 50%;
     margin-bottom: 15px;
 }
 .share {
     margin-left: 10%;
-    width: 30%;
+    width: 50%;
 }
 .chart {
 	margin-top: -5%;

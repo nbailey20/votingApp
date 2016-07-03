@@ -147,10 +147,26 @@ module.exports = function (app, db) {
 		
 	app.route("/poll/:ID")
 		.get(function (req, res) {
-			res.sendFile(process.cwd() + "/public/poll.html");
+			var ID = req.params.ID;
+			var polls = db.collection("polls");
+			polls.find({"_id": ObjectId(ID)}).toArray(function (err, docs) {
+				if (err) throw err;
+				console.log(docs.length);
+				if (docs.length !== 0) {
+					res.sendFile(process.cwd() + "/public/poll.html");
+				}
+				else {
+					if (access.token === "") {
+						res.send("Not a valid poll, please use <a href='https://votingapp-bartowski20.c9users.io/'>this</a> button to get out of uncharted territory!");
+					}
+					else {
+						res.send("Not a valid poll, please use <a href='https://votingapp-bartowski20.c9users.io/user'>this</a> button to get out of uncharted territory!");
+					}
+					
+				}
+			});
 		})
 		.post(function (req, res) {
-			
 			var ID = req.params.ID;
 			var polls = db.collection("polls");
 			polls.find({"_id": ObjectId(ID)}).toArray(function (err, docs) {
@@ -159,6 +175,8 @@ module.exports = function (app, db) {
 				if (access.token !== "") {
 					obj.loggedIn = "yes";
 					obj["name"] = user.name;
+					obj["id"] = user.id;
+					obj["createdby"] = docs[0].createdby;
 				}
 				console.log(JSON.stringify(obj));
 				res.send(obj);

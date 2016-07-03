@@ -23,14 +23,19 @@ $(document).ready(function () {
    
    $("#vote").on("click", function () {
        var vote = $("#choice").html();
-       var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
-       $.ajax({
-         type: "POST",
-         url: "https://votingapp-bartowski20.c9users.io/vote",
-         data: {vote: vote, id: id},
-         success: successer,
-         error: errorer
-       });
+       if (vote.substr(0,19) == "Choose an option...") {
+           alert("Please select an option before voting.");
+       }
+       else {
+            var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
+           $.ajax({
+             type: "POST",
+             url: "https://votingapp-bartowski20.c9users.io/vote",
+             data: {vote: vote, id: id},
+             success: successer,
+             error: errorer
+           });
+       }
    });
    
    $("#share").on("click", function () {
@@ -88,7 +93,9 @@ function successHandler1 (data) {
        if (data.loggedIn == "yes") {
            $("#header").html(header);
            $("#name").html(data.name + '<span class="caret"></span>');
-           $("#delete").html("<button id='deletepoll' class='btn btn-danger delete-button'>Delete Poll</button>");
+           if (data.id == data.createdby) {
+                $("#delete").html("<button id='deletepoll' class='btn btn-danger delete-button'>Delete Poll</button>");
+           }
        }
        drawChart();
 }
@@ -119,6 +126,7 @@ function drawChart() {
    
    function successer(data) {
       alert("Cast vote for " + data);
+      $("#choice").html("Choose an option... <span class='caret'></span>");
       makeAjax1();
 }
 

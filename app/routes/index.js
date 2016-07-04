@@ -189,7 +189,7 @@ module.exports = function (app, db) {
 			console.log(req.body);
 			var pollID = req.body.id;
 			var polls = db.collection("polls");
-			if (req.body.choice !== "") {
+			if (req.body.choice) {
 				polls.update({"_id": ObjectId(pollID)}, {$push: {choices: req.body.choice}});
 				var hack = {};
 				hack['votes.' + vote] = 1;

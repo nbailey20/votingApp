@@ -6,7 +6,7 @@ var votes;
 
 $(document).ready(function () {
    if (document.referrer.substr(0, 23) == "https://api.twitter.com") {
-       setTimeout(makeAjax1, 750);
+       setTimeout(makeAjax1, 1000);
    }
    else {
        makeAjax1();
@@ -18,13 +18,29 @@ $(document).ready(function () {
    $("#choices").on("click",  ".option", function (event) {
        var id = event.target.id;
        var chosen = $("#"+id).html();
+       if (chosen == "Custom Option...") {
+           $("#customvote").html('<p class="custom-text col-xs-6">New Option:</p><input id="newinput" class="col-xs-6 custom-input" type="text">');
+       }
        $("#choice").html(chosen);
    });
+   
    
    $("#vote").on("click", function () {
        var vote = $("#choice").html();
        if (vote.substr(0,19) == "Choose an option...") {
            alert("Please select an option before voting.");
+       }
+       else if (vote.substr(0, 16) == "Custom Option...") {
+           var writein = $("#newinput").val();
+           var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
+           $.ajax({
+             type: "POST",
+             url: "https://votingapp-bartowski20.c9users.io/vote",
+             data: {vote: writein, id: id, choice: writein},
+             success: successer,
+             error: errorer
+           });
+           
        }
        else {
             var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
@@ -88,15 +104,17 @@ function successHandler1 (data) {
            options += "<li class='option' id='option" + i + "'>" + element + "</li>";
            i++;
        });
+      
        $("#title").html(title.substr(1, title.length-2));
-       $("#choices").html(options);
        if (data.loggedIn == "yes") {
+           options += "<li class='option' id='writein'>Custom Option...</li>";
            $("#header").html(header);
-           $("#name").html(data.name + '<span class="caret"></span>');
+           $("#name").html(data.name + ' <span class="caret"></span>');
            if (data.id == data.createdby) {
                 $("#delete").html("<button id='deletepoll' class='btn btn-danger delete-button'>Delete Poll</button>");
            }
        }
+       $("#choices").html(options);
        drawChart();
 }
   
@@ -124,15 +142,16 @@ function drawChart() {
        chart.draw(data, options);
    }; 
    
-   function successer(data) {
+function successer(data) {
       alert("Cast vote for " + data);
       $("#choice").html("Choose an option... <span class='caret'></span>");
+      $("#customvote").html("");
       makeAjax1();
 }
 
-   function errorer(err) {
+function errorer(err) {
      alert('error with casting vote');
-   }
+}
 
 
 function successDelete (data) {

@@ -59,6 +59,9 @@
 
 .header-name {
 	margin-top: 5px;
+	background-color: tan;
+	color: navy;
+	border: none;
 }
 
 /* Main text styling */

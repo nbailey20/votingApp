@@ -151,7 +151,6 @@ module.exports = function (app, db) {
 			var polls = db.collection("polls");
 			polls.find({"_id": ObjectId(ID)}).toArray(function (err, docs) {
 				if (err) throw err;
-				console.log(docs.length);
 				if (docs.length !== 0) {
 					res.sendFile(process.cwd() + "/public/poll.html");
 				}
@@ -190,10 +189,20 @@ module.exports = function (app, db) {
 			console.log(req.body);
 			var pollID = req.body.id;
 			var polls = db.collection("polls");
-			var hack = {};
-			hack['votes.' + vote] = 1;
-			polls.update({"_id": ObjectId(pollID)}, {$inc: hack});
-			res.send(vote);
+			if (req.body.choice !== "") {
+				polls.update({"_id": ObjectId(pollID)}, {$push: {choices: req.body.choice}});
+				var hack = {};
+				hack['votes.' + vote] = 1;
+				polls.update({"_id": ObjectId(pollID)}, {$inc: hack});
+				res.send(vote);
+			}
+			else {
+				var hack = {};
+				hack['votes.' + vote] = 1;
+				polls.update({"_id": ObjectId(pollID)}, {$inc: hack});
+				res.send(vote);
+			}
+			
 		});
 		
 		

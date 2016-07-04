@@ -61,6 +61,9 @@
 }
 .header-name {
 	margin-top: 5px;
+	background-color: tan;
+	color: navy;
+	border: none;
 }
 
 /* Main text styling */
@@ -102,6 +105,13 @@
 }
 .option:hover {
 	text-decoration: underline;
+}
+.custom-text {
+	margin-left: 10%;
+}
+.custom-input {
+	margin-left: -30%;
+	width: 30%;
 }
 .vote {
     margin-left: 10%;

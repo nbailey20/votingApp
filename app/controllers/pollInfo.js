@@ -5,12 +5,7 @@ var choices;
 var votes;
 
 $(document).ready(function () {
-   if (document.referrer.substr(0, 23) == "https://api.twitter.com") {
-       setTimeout(makeAjax1, 1000);
-   }
-   else {
-       makeAjax1();
-   }
+   makeAjax1();
    
    google.charts.load('current', {'packages':['corechart']});
    google.charts.setOnLoadCallback(drawChart);
@@ -32,7 +27,7 @@ $(document).ready(function () {
        }
        else if (vote.substr(0, 16) == "Custom Option...") {
            var writein = $("#newinput").val();
-           var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
+           var id = window.location.pathname.substr(window.location.pathname.length-24, window.location.pathname.length);
            $.ajax({
              type: "POST",
              url: "https://votingapp-bartowski20.c9users.io/vote",
@@ -43,7 +38,7 @@ $(document).ready(function () {
            
        }
        else {
-            var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
+            var id = window.location.pathname.substr(window.location.pathname.length-24, window.location.pathname.length);
            $.ajax({
              type: "POST",
              url: "https://votingapp-bartowski20.c9users.io/vote",
@@ -56,7 +51,7 @@ $(document).ready(function () {
    
    $("#share").on("click", function () {
        var url = "https://twitter.com/intent/tweet?text="+$("#title").html()+" %7C Voter&url=https://votingapp-bartowski20.c9users.io/poll/";
-       url += location.pathname.substr(location.pathname.length-24, location.pathname.length);
+       url += window.location.pathname.substr(window.location.pathname.length-24, window.location.pathname.length);
        window.open(url, "_blank"); 
    });
    
@@ -64,10 +59,10 @@ $(document).ready(function () {
    $("#delete").on("click", function () {
       var makeSure = confirm("Are you sure you want to delete this poll?"); 
       if (makeSure) {
-           var id = location.pathname.substr(location.pathname.length-24, location.pathname.length);
+           var id = window.location.pathname.substr(window.location.pathname.length-24, window.location.pathname.length);
            $.ajax({
              type: "POST",
-             url: "https://votingapp-bartowski20.c9users.io/deletePoll",
+             url: "/deletePoll",
              data: {id: id},
              success: successDelete,
              error: errorDelete
@@ -78,26 +73,19 @@ $(document).ready(function () {
 });
 
 function makeAjax1() {
-       $.ajax({
-              type: "POST",
-              url: location.href,
-              success: successHandler1,
-              error: errorHandler
-          });
+    $.ajax({
+        type: "POST",
+        url: window.location.href,
+        success: successHandler1,
+        error: errorHandler
+    });
 }
 
 function successHandler1 (data) {
-        title = JSON.stringify(data.title);
-        choices = data.choices;
-        votes = JSON.stringify(data.votes);
-        var header = '<div class="col-xs-2 header-title"><a class="header-title" href="https://votingapp-bartowski20.c9users.io/user">Voter</a>' 
-		header += '</div><div class="col-xs-5"></div><div class="col-xs-1 header-home"><a class="header-home" href="https://votingapp-bartowski20.c9users.io/user">Home</a>'
-		header += '</div><div class="col-xs-1 header-mypolls"><a class="header-mypolls" href="https://votingapp-bartowski20.c9users.io/mypolls">My Polls</a>'
-		header += '</div><div class="col-xs-1 header-newpoll"><a class="header-newpoll" href="https://votingapp-bartowski20.c9users.io/newpoll">New Poll</a>'
-		header += '</div><div class="col-xs-2"><div class="dropdown">'
-		header += '<button class="header-name btn btn-default dropdown-toggle" id="name" data-toggle="dropdown">Loading...<span class="caret"></span></button>'
-		header += '<ul class="dropdown-menu"><li id="logout"><a href="https://votingapp-bartowski20.c9users.io/logout">Logout</a></li></ul></div></div>'
-       
+       title = JSON.stringify(data.title);
+       choices = data.choices;
+       votes = JSON.stringify(data.votes);
+        
        var options = "";
        var i = 1;
        choices.forEach(function (element) {
@@ -106,12 +94,12 @@ function successHandler1 (data) {
        });
       
        $("#title").html(title.substr(1, title.length-2));
-       if (data.loggedIn == "yes") {
-           options += "<li class='option' id='writein'>Custom Option...</li>";
-           $("#header").html(header);
-           $("#name").html(data.name + ' <span class="caret"></span>');
-           if (data.id == data.createdby) {
-                $("#delete").html("<button id='deletepoll' class='btn btn-danger delete-button'>Delete Poll</button>");
+       if (data.user) {
+           if (data.user.twitterid) {
+               options += "<li class='option' id='writein'>Custom Option...</li>";
+               if (data.user.twitterid == data.createdby) {
+                    $("#delete").html("<button id='deletepoll' class='btn btn-danger delete-button'>Delete Poll</button>");
+               }
            }
        }
        $("#choices").html(options);
@@ -140,7 +128,7 @@ function drawChart() {
 
        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
        chart.draw(data, options);
-   }; 
+   } 
    
 function successer(data) {
       alert("Cast vote for " + data);

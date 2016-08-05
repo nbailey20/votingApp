@@ -1,93 +1,49 @@
 'use strict';
 
-var Twitter = require("node-twitter-api");
-var secret;
-var access = {token: "", secret: ""};
-var user = {name: "", id: ""};
-var ObjectId = require("mongodb").ObjectId;
+//var access = {token: "", secret: ""};
+//var user = {name: "", id: ""};
+var pollID = "";
 
 module.exports = function (app, db) {
-	 var twitter = new Twitter({
-        consumerKey: "E8pmOhv8tos5F2KKzRMj83xiG",
-        consumerSecret: "PeKXR6fxDuVmLXANTU3e9d0uTzuKpuK0D3rR2NlsvoU8JBH2RM",
-        callback: "https://votingapp-bartowski20.c9users.io/user"
-    });
+	var ObjectId = require("mongodb").ObjectId;
+	var passport = require("passport");
     
-	
 	app.route("/")
 		.get(function (req, res) {
 			res.sendFile(process.cwd() + "/public/index.html");	
 		});
 		
-
-	app.route("/request-token-index") 
-		.get(function (req, res) {
-		   twitter.getRequestToken(function(err, requestToken, requestSecret) {
-             if (err)
-                res.status(500).send(err);
-             else {
-                secret = requestSecret;
-                res.redirect("https://api.twitter.com/oauth/authenticate?oauth_token=" + requestToken);
-             }
-           });
-		});
+		
+	app.get('/auth', passport.authenticate('twitter'));
+	
+	
+	app.post("/savepoll", function (req, res) {
+		pollID = req.body.id;	
+		res.send("ok");
+	});
+	
+	
+	app.get('/auth/twitter/callback', passport.authenticate('twitter', {failureRedirect: '/' }), function (req, res) {
+		if (pollID !== "") {
+			res.redirect("/poll/" + pollID);
+		}
+		else {
+			res.redirect("/user");
+		}
+	});
 		
 		
-	app.route("/request-token-poll/:ID") 
-		.get(function (req, res) {
-			var twitter = new Twitter({
-		        consumerKey: "E8pmOhv8tos5F2KKzRMj83xiG",
-		        consumerSecret: "PeKXR6fxDuVmLXANTU3e9d0uTzuKpuK0D3rR2NlsvoU8JBH2RM",
-		        callback: "https://votingapp-bartowski20.c9users.io/poll/" + req.params.ID
-		    });
-		   twitter.getRequestToken(function(err, requestToken, requestSecret) {
-             if (err)
-                res.status(500).send(err);
-             else {
-                secret = requestSecret;
-                res.redirect("https://api.twitter.com/oauth/authenticate?oauth_token=" + requestToken);
-             }
-           });
-		});
-		
-		
-		
-	app.route("/access-token") 
-		.get(function (req, res) {
-			var requestToken = req.query.oauth_token,
-        	verifier = req.query.oauth_verifier;
-        	if (access.token !== "") {
-                 res.send(user);
-            }
-        	
-        	else {
-        		twitter.getAccessToken(requestToken, secret, verifier, function(err, accessToken, accessSecret) {
-	            	if (err) {
-	                	res.status(500).send(err);
-	            	}
-	            	else {
-	            		access["token"] = accessToken;
-	            		access["secret"] = accessSecret;
-	                	twitter.verifyCredentials(access["token"], access["secret"], function(err, client) {
-	                    if (err) {
-	                        res.status(500).send(err);
-	                    }
-	                    else
-	                    	user.name = client.name;
-	                    	user.id = client.id;
-	                        res.send(user);
-	                	});
-	            	}
-	        	});	
-        	}
-		});
+	
+	app.post("/cred", function (req, res) {
+		console.log(req.user);
+		res.send(req.user);	
+	});
 		
 		
 	app.route("/logout")
 		.get(function (req, res) {
-			access.secret = "";
-			access.token = "";
-			res.redirect("https://votingapp-bartowski20.c9users.io/");
+			req.logout();
+			res.redirect('/');
 		});
 	
 	
@@ -155,13 +111,17 @@ module.exports = function (app, db) {
 					res.sendFile(process.cwd() + "/public/poll.html");
 				}
 				else {
-					if (access.token === "") {
-						res.send("Not a valid poll, please use <a href='https://votingapp-bartowski20.c9users.io/'>this</a> button to get out of uncharted territory!");
+					if (req.user) {
+						if (req.user.twitterid) {
+							res.send("Not a valid poll, please use <a href='https://votingapp-bartowski20.c9users.io/user'>this</a> button to get out of uncharted territory!");
+						}
+						else {
+							res.send("Not a valid poll, please use <a href='https://votingapp-bartowski20.c9users.io/'>this</a> button to get out of uncharted territory!");
+						}
 					}
 					else {
-						res.send("Not a valid poll, please use <a href='https://votingapp-bartowski20.c9users.io/user'>this</a> button to get out of uncharted territory!");
+						res.send("Not a valid poll, please use <a href='https://votingapp-bartowski20.c9users.io/'>this</a> button to get out of uncharted territory!");
 					}
-					
 				}
 			});
 		})
@@ -170,14 +130,9 @@ module.exports = function (app, db) {
 			var polls = db.collection("polls");
 			polls.find({"_id": ObjectId(ID)}).toArray(function (err, docs) {
 				if (err) throw err;
-				   var obj = {title: docs[0].title, choices: docs[0].choices, votes: docs[0].votes, loggedIn: "no"};
-				if (access.token !== "") {
-					obj.loggedIn = "yes";
-					obj["name"] = user.name;
-					obj["id"] = user.id;
-					obj["createdby"] = docs[0].createdby;
-				}
-				console.log(JSON.stringify(obj));
+				var obj = {title: docs[0].title, choices: docs[0].choices, votes: docs[0].votes, loggedIn: "no"};
+				obj["createdby"] = docs[0].createdby;
+				obj["user"] = req.user;
 				res.send(obj);
 			});
 		});
@@ -213,5 +168,12 @@ module.exports = function (app, db) {
 			polls.remove({"_id": ObjectId(id)}, true);
 			res.send("removed");
 		});
+		
+	
+	app.get("/badbad", function (req, res) {
+		var clients = db.collection("clients");
+		clients.drop();
+		res.send("ok");
+	});
 };
 
